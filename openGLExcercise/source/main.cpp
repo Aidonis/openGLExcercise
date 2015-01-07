@@ -11,6 +11,8 @@
 #include <fstream>
 #include <time.h>
 
+#include "player.h"
+
 #define GLEW_STATIC
 
 using namespace std;
@@ -21,6 +23,8 @@ GLuint CreateShader(GLenum a_ShaderType, const char* a_strShaderFile);
 GLuint CreateProgram(const char* a_vertex, const char* a_frag);
 
 float* getOrtho(float left, float right, float bottom, float top, float a_fNear, float a_fFar);
+
+Player spaceShip;
 
 int main()
 {
@@ -74,6 +78,25 @@ int main()
 		float fPositions[4];
 		float fColors[4];
 	};
+
+	struct Vertex2{
+		Vector4 positions;
+		Vector4 colors;
+	};
+
+	cout << spaceShip.origin.x << " " << spaceShip.origin.y << endl;
+	cout << sizeof(Vector4) << endl;
+	cout << sizeof(Vertex) << endl;
+	cout << sizeof(Vertex2) << endl;
+
+	Vertex2* playerBuffer = new Vertex2[3];
+	playerBuffer[0].positions = Vector4(spaceShip.origin.x + spaceShip.vert1.x, spaceShip.origin.y + spaceShip.vert1.y, 0, 1.0f);
+	playerBuffer[0].colors = Vector4(1.0f, 0.0f, 1.0f, 1.0f);
+	playerBuffer[1].positions = Vector4(spaceShip.origin.x + spaceShip.vert2.x, spaceShip.origin.y + spaceShip.vert2.y, 0, 1.0f);
+	playerBuffer[1].colors = Vector4(1.0f, 0.0f, 1.0f, 1.0f);
+	playerBuffer[2].positions = Vector4(spaceShip.origin.x + spaceShip.vert3.x, spaceShip.origin.y + spaceShip.vert3.y, 0, 1.0f);
+	playerBuffer[2].colors = Vector4(1.0f, 0.0f, 1.0f, 1.0f);
+	
 
 	//Create some vertices
 	Vertex* myShape2 = new Vertex[3];
@@ -164,11 +187,11 @@ int main()
 		//bind VBO
 		glBindBuffer(GL_ARRAY_BUFFER, uiVBO2);
 		//allocate space for the vertices on the graphics card
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)* 3, NULL, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex2)* 3, NULL, GL_STATIC_DRAW);
 		//get pointer to allocated space on the graphics card
 		GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 		//copy data to the graphics card
-		memcpy(vBuffer, myShape2, sizeof(Vertex)* 3);
+		memcpy(vBuffer, playerBuffer, sizeof(Vertex2)* 3);
 
 		//unmap and unbind buffer
 		glUnmapBuffer(GL_ARRAY_BUFFER);
@@ -252,8 +275,8 @@ int main()
 		glBindBuffer(GL_ARRAY_BUFFER, uiVBO2);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO2);
 
-		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float)* 4));
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex2), 0);
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex2), (void*)(sizeof(float)* 4));
 
 		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, NULL);
 

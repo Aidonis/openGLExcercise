@@ -3,11 +3,11 @@
 #include <AiMath.h>
 using namespace AiMath;
 
-class player
+class Player
 {
 public:
-	player();
-	~player();
+	Player();
+	~Player();
 
 	Vector2 origin;
 	Vector2 vert1;
