@@ -3,6 +3,7 @@
 
 //GLEW includes must b e first!
 #include <GLFW\glfw3.h>
+#include <AiMath.h>
 
 #include <iostream>
 #include <vector>
@@ -13,6 +14,7 @@
 #define GLEW_STATIC
 
 using namespace std;
+using namespace AiMath;
 
 GLuint CreateShader(GLenum a_ShaderType, const char* a_strShaderFile);
 
@@ -74,16 +76,14 @@ int main()
 	};
 
 	//Create some vertices
-	Vertex* myShape2 = new Vertex[4];
+	Vertex* myShape2 = new Vertex[3];
 	myShape2[0].fPositions[0] = 100.0f;
 	myShape2[0].fPositions[1] = 100.0f;
 	myShape2[1].fPositions[0] = 200.0f;
 	myShape2[1].fPositions[1] = 200.0f;
 	myShape2[2].fPositions[0] = 300.0f;
 	myShape2[2].fPositions[1] = 100.0f;
-	myShape2[3].fPositions[0] = 400.0f;
-	myShape2[3].fPositions[1] = 300.0f;
-	for (int i = 0; i < 4; i++){
+	for (int i = 0; i < 3; i++){
 		myShape2[i].fPositions[2] = 0.0f;
 		myShape2[i].fPositions[3] = 1.0f;
 		myShape2[i].fColors[0] = 1.0f;
@@ -164,11 +164,11 @@ int main()
 		//bind VBO
 		glBindBuffer(GL_ARRAY_BUFFER, uiVBO2);
 		//allocate space for the vertices on the graphics card
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)* 4, NULL, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)* 3, NULL, GL_STATIC_DRAW);
 		//get pointer to allocated space on the graphics card
 		GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 		//copy data to the graphics card
-		memcpy(vBuffer, myShape2, sizeof(Vertex)* 4);
+		memcpy(vBuffer, myShape2, sizeof(Vertex)* 3);
 
 		//unmap and unbind buffer
 		glUnmapBuffer(GL_ARRAY_BUFFER);
@@ -181,12 +181,12 @@ int main()
 		//bind IBO
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO2);
 		//allocate space for index info on the graphics card
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(char), NULL, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(char), NULL, GL_STATIC_DRAW);
 		//get pointer to newly allocated space on the graphics card
 		GLvoid* iBuffer = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
 		//specify the order we'd like to draw our vertices.
 		//In this case they are in sequential order
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 3; i++)
 		{
 			((char*)iBuffer)[i] = i;
 		}
@@ -255,7 +255,7 @@ int main()
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float)* 4));
 
-		glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, NULL);
+		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, NULL);
 
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
