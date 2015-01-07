@@ -47,26 +47,24 @@ int main()
 		return -1;
 	}
 
-	//printf("Version: %s\n", glGetString(GL_VERSION));
+	//const float vertexPositions[] =
+	//{
+	//	1024 / 2.0, 720 / 2.0 + 75.0f, 0.0f, 1.0f,
+	//	1024 / 2.0 - 75.0f, 720 / 2.0f - 50.0f, 0.0f, 1.0f,
+	//	1024 / 2.0 + 150.0f, 720 / 2.0 + 75.0f, 0.0f, 1.0f,
+	//	1024 / 2.0 + 75.0f, 720 / 2.0 - 50.0f, 0.0f, 1.0f,
+	//	1024 / 2.0 + 185.0f, 720 / 2.0 - 50.0f, 0.0f, 1.0f,
 
-	const float vertexPositions[] =
-	{
-		1024 / 2.0, 720 / 2.0 + 75.0f, 0.0f, 1.0f,
-		1024 / 2.0 - 75.0f, 720 / 2.0f - 50.0f, 0.0f, 1.0f,
-		1024 / 2.0 + 150.0f, 720 / 2.0 + 75.0f, 0.0f, 1.0f,
-		1024 / 2.0 + 75.0f, 720 / 2.0 - 50.0f, 0.0f, 1.0f,
-		1024 / 2.0 + 185.0f, 720 / 2.0 - 50.0f, 0.0f, 1.0f,
+	//};
 
-	};
-
-	const float vertexColors[] =
-	{
-		1.0f, 0.0f, 0.0f, 1.0f,
-		0.0f, 1.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f, 1.0f,
-		1.0f, 0.0f, 1.0f, 1.0f,
-		2.0f, 1.0f, 1.0f, 1.0f,
-	};
+	//const float vertexColors[] =
+	//{
+	//	1.0f, 0.0f, 0.0f, 1.0f,
+	//	0.0f, 1.0f, 0.0f, 1.0f,
+	//	0.0f, 0.0f, 1.0f, 1.0f,
+	//	1.0f, 0.0f, 1.0f, 1.0f,
+	//	2.0f, 1.0f, 1.0f, 1.0f,
+	//};
 
 	//Vertex Structure
 	struct Vertex{
@@ -93,6 +91,7 @@ int main()
 		myShape2[i].fColors[3] = 1.0f;
 	}
 
+	//create random 'star' vertices
 	Vertex* myShape = new Vertex[100];
 	for (int i = 0; i < 100; i++){
 		myShape[i].fPositions[0] = rand() % 1024;
@@ -104,25 +103,6 @@ int main()
 		myShape[i].fColors[2] = 0.0f;
 		myShape[i].fColors[3] = 1.0f;
 	}
-
-	//Create some vertices
-	/*Vertex* myShape2 = new Vertex[4];
-	myShape[0].fPositions[0] = 100.0f;
-	myShape[0].fPositions[1] = 100.0f;
-	myShape[1].fPositions[0] = 200.0f;
-	myShape[1].fPositions[1] = 200.0f;
-	myShape[2].fPositions[0] = 300.0f;
-	myShape[2].fPositions[1] = 100.0f;
-	myShape[3].fPositions[0] = 400.0f;
-	myShape[3].fPositions[1] = 300.0f;
-	for (int i = 0; i < 4; i++){
-		myShape[i].fPositions[2] = 0.0f;
-		myShape[i].fPositions[3] = 1.0f;
-		myShape[i].fColors[0] = 1.0f;
-		myShape[i].fColors[1] = 0.0f;
-		myShape[i].fColors[2] = 0.0f;
-		myShape[i].fColors[3] = 1.0f;
-	}*/
 
 	//create ID for a vertex buffer object
 	GLuint uiVBO;
@@ -235,26 +215,19 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		////enable shaders
-		//glUseProgram(programFlat);
+		glUseProgram(programFlat);
 
 		//send ortho projection info to shader
 		glUniformMatrix4fv(IDFlat, 1, GL_FALSE, orthographicProjection);	
-
-		////enable vertex array state
-		//glEnableVertexAttribArray(0);
-		//glEnableVertexAttribArray(1);
 
 		////specify where vertex array is
 		//glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, vertexPositions);
 		//glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, vertexColors);
 
-
 		////draw code here
 		//glDrawArrays(GL_TRIANGLE_STRIP, 0, 5);
 
 		//vbo draw
-		//enable shaders
-		glUseProgram(programFlat);
 
 		glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
