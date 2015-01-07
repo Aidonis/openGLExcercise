@@ -8,6 +8,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <time.h>
 
 #define GLEW_STATIC
 
@@ -21,7 +22,7 @@ float* getOrtho(float left, float right, float bottom, float top, float a_fNear,
 
 int main()
 {
-
+	srand(time(nullptr));
 
 	if (!glfwInit())
 	{
