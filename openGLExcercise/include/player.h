@@ -1,7 +1,8 @@
 #pragma once
 
-#include <AiMath.h>
-using namespace AiMath;
+#include <glm\glm.hpp>
+
+using namespace glm;
 
 class Player
 {
@@ -9,10 +10,10 @@ public:
 	Player();
 	~Player();
 
-	Vector2 origin;
-	Vector2 vert1;
-	Vector2 vert2;
-	Vector2 vert3;
+	vec2 origin;
+	vec2 vert1;
+	vec2 vert2;
+	vec2 vert3;
 
 };
 

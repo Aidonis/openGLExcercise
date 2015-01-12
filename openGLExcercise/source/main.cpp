@@ -3,7 +3,8 @@
 
 //GLEW includes must b e first!
 #include <GLFW\glfw3.h>
-#include <AiMath.h>
+#include <glm\glm.hpp>
+#include <soil\SOIL.h>
 
 #include <iostream>
 #include <vector>
@@ -16,7 +17,7 @@
 #define GLEW_STATIC
 
 using namespace std;
-using namespace AiMath;
+using namespace glm;
 
 GLuint CreateShader(GLenum a_ShaderType, const char* a_strShaderFile);
 
@@ -54,24 +55,18 @@ int main()
 		return -1;
 	}
 
-	//const float vertexPositions[] =
-	//{
-	//	1024 / 2.0, 720 / 2.0 + 75.0f, 0.0f, 1.0f,
-	//	1024 / 2.0 - 75.0f, 720 / 2.0f - 50.0f, 0.0f, 1.0f,
-	//	1024 / 2.0 + 150.0f, 720 / 2.0 + 75.0f, 0.0f, 1.0f,
-	//	1024 / 2.0 + 75.0f, 720 / 2.0 - 50.0f, 0.0f, 1.0f,
-	//	1024 / 2.0 + 185.0f, 720 / 2.0 - 50.0f, 0.0f, 1.0f,
+	//Testing SOIL
+	GLuint tex_2d = SOIL_load_OGL_texture(
+		"img.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+		);
 
-	//};
-
-	//const float vertexColors[] =
-	//{
-	//	1.0f, 0.0f, 0.0f, 1.0f,
-	//	0.0f, 1.0f, 0.0f, 1.0f,
-	//	0.0f, 0.0f, 1.0f, 1.0f,
-	//	1.0f, 0.0f, 1.0f, 1.0f,
-	//	2.0f, 1.0f, 1.0f, 1.0f,
-	//};
+	//Check for error in laod process
+	if (0 == tex_2d){
+		printf("SOIL loading error: '%s'\n", SOIL_last_result());
+	}
 
 	//Vertex Structure
 	struct Vertex{
@@ -80,22 +75,22 @@ int main()
 	};
 
 	struct Vertex2{
-		Vector4 positions;
-		Vector4 colors;
+		vec4 positions;
+		vec4 colors;
 	};
 
 	cout << spaceShip.origin.x << " " << spaceShip.origin.y << endl;
-	cout << sizeof(Vector4) << endl;
+	cout << sizeof(vec4) << endl;
 	cout << sizeof(Vertex) << endl;
 	cout << sizeof(Vertex2) << endl;
 
 	Vertex2* playerBuffer = new Vertex2[3];
-	playerBuffer[0].positions = Vector4(spaceShip.origin.x + spaceShip.vert1.x, spaceShip.origin.y + spaceShip.vert1.y, 0, 1.0f);
-	playerBuffer[0].colors = Vector4(1.0f, 0.0f, 1.0f, 1.0f);
-	playerBuffer[1].positions = Vector4(spaceShip.origin.x + spaceShip.vert2.x, spaceShip.origin.y + spaceShip.vert2.y, 0, 1.0f);
-	playerBuffer[1].colors = Vector4(1.0f, 0.0f, 1.0f, 1.0f);
-	playerBuffer[2].positions = Vector4(spaceShip.origin.x + spaceShip.vert3.x, spaceShip.origin.y + spaceShip.vert3.y, 0, 1.0f);
-	playerBuffer[2].colors = Vector4(1.0f, 0.0f, 1.0f, 1.0f);
+	playerBuffer[0].positions = vec4(spaceShip.origin.x + spaceShip.vert1.x, spaceShip.origin.y + spaceShip.vert1.y, 0, 1.0f);
+	playerBuffer[0].colors = vec4(1.0f, 0.0f, 1.0f, 1.0f);
+	playerBuffer[1].positions = vec4(spaceShip.origin.x + spaceShip.vert2.x, spaceShip.origin.y + spaceShip.vert2.y, 0, 1.0f);
+	playerBuffer[1].colors = vec4(1.0f, 0.0f, 1.0f, 1.0f);
+	playerBuffer[2].positions = vec4(spaceShip.origin.x + spaceShip.vert3.x, spaceShip.origin.y + spaceShip.vert3.y, 0, 1.0f);
+	playerBuffer[2].colors = vec4(1.0f, 0.0f, 1.0f, 1.0f);
 	
 
 	//Create some vertices
