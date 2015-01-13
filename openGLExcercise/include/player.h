@@ -16,16 +16,18 @@ public:
 
 	~Player()
 	{
-		delete verticesBuffer;
+		//delete verticesBuffer;
 	}
 
 	void Draw()
 	{
+		glBindTexture(GL_TEXTURE_2D, textureID);
 		glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO);
 
 		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float) * 4));
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(vec4)));
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(vec4)* 2));
 
 		glDrawElements(GL_TRIANGLES, modelVertices.size(), GL_UNSIGNED_BYTE, NULL);
 

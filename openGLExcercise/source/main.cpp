@@ -260,15 +260,17 @@ int main()
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
 		
-		glBindTexture(GL_TEXTURE_2D, textureID);
-		glBindBuffer(GL_ARRAY_BUFFER, uiVBO2);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO2);
+		//glBindTexture(GL_TEXTURE_2D, textureID);
+		//glBindBuffer(GL_ARRAY_BUFFER, uiVBO2);
+		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO2);
 
-		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex2), 0);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex2), (void*)(sizeof(vec4)));
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex2), (void*)(sizeof(vec4)* 2));
+		//glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex2), 0);
+		//glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex2), (void*)(sizeof(vec4)));
+		//glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex2), (void*)(sizeof(vec4)* 2));
 
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, NULL);
+		spaceShip.Draw();
+
+		//glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, NULL);
 
 		//Movement Shits
 		//if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
