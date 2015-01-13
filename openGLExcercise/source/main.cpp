@@ -77,7 +77,7 @@ int main()
 
 	//Initialize player
 	Player spaceShip;
-	spaceShip.Initialize(vec4(1024 / 2.0, 720 / 2.0, 0, 0), vec4(1, 0, 1, 1), textureID);
+	//spaceShip.Initialize(vec4(1024 / 2.0, 720 / 2.0, 0, 0), vec4(1, 0, 1, 1), textureID);
 
 	//cout << spaceShip.origin.x << " " << spaceShip.origin.y << endl;
 	//cout << sizeof(vec4) << endl;
@@ -85,16 +85,16 @@ int main()
 	//cout << sizeof(Vertex) << endl;
 	//cout << sizeof(Vertex2) << endl;
 
-	//Vertex2* playerBuffer = new Vertex2[3];
-	//playerBuffer[0].positions = vec4(spaceShip.origin.x + spaceShip.vert1.x, spaceShip.origin.y + spaceShip.vert1.y, 0, 1.0f);
-	//playerBuffer[0].colors = vec4(1.0f, 1.0f, 1.0f, 0.0f);
-	//playerBuffer[1].positions = vec4(spaceShip.origin.x + spaceShip.vert2.x, spaceShip.origin.y + spaceShip.vert2.y, 0, 1.0f);
-	//playerBuffer[1].colors = vec4(1.0f, 0.0f, 1.0f, 0.0f);
-	//playerBuffer[2].positions = vec4(spaceShip.origin.x + spaceShip.vert3.x, spaceShip.origin.y + spaceShip.vert3.y, 0, 1.0f);
-	//playerBuffer[2].colors = vec4(1.0f, 0.0f, 1.0f, 0.0f);
-	//playerBuffer[0].fUVs = vec2(0.5f, 1.0f);//top of triangle
-	//playerBuffer[1].fUVs = vec2(0.2f, 0.5f);//bottom left
-	//playerBuffer[2].fUVs = vec2(0.7f,0.5f);//bottom right
+	Vertex2* playerBuffer = new Vertex2[3];
+	playerBuffer[0].positions = vec4(spaceShip.origin.x + spaceShip.vert1.x, spaceShip.origin.y + spaceShip.vert1.y, 0, 1.0f);
+	playerBuffer[0].colors = vec4(1.0f, 1.0f, 1.0f, 0.0f);
+	playerBuffer[1].positions = vec4(spaceShip.origin.x + spaceShip.vert2.x, spaceShip.origin.y + spaceShip.vert2.y, 0, 1.0f);
+	playerBuffer[1].colors = vec4(1.0f, 0.0f, 1.0f, 0.0f);
+	playerBuffer[2].positions = vec4(spaceShip.origin.x + spaceShip.vert3.x, spaceShip.origin.y + spaceShip.vert3.y, 0, 1.0f);
+	playerBuffer[2].colors = vec4(1.0f, 0.0f, 1.0f, 0.0f);
+	playerBuffer[0].fUVs = vec2(0.5f, 1.0f);//top of triangle
+	playerBuffer[1].fUVs = vec2(0.2f, 0.5f);//bottom left
+	playerBuffer[2].fUVs = vec2(0.7f,0.5f);//bottom right
 
 	//create random 'star' vertices
 	Vertex* myShape = new Vertex[100];
@@ -164,40 +164,40 @@ int main()
 	}
 
 	////check it succeeded
-	//if (uiVBO2 != 0){
-	//	//bind VBO
-	//	glBindBuffer(GL_ARRAY_BUFFER, uiVBO2);
-	//	//allocate space for the vertices on the graphics card
-	//	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex2)* 3, NULL, GL_STATIC_DRAW);
-	//	//get pointer to allocated space on the graphics card
-	//	GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	//	//copy data to the graphics card
-	//	memcpy(vBuffer, playerBuffer, sizeof(Vertex2)* 3);
+	if (uiVBO2 != 0){
+		//bind VBO
+		glBindBuffer(GL_ARRAY_BUFFER, uiVBO2);
+		//allocate space for the vertices on the graphics card
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex2)* 3, NULL, GL_STATIC_DRAW);
+		//get pointer to allocated space on the graphics card
+		GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+		//copy data to the graphics card
+		memcpy(vBuffer, playerBuffer, sizeof(Vertex2)* 3);
 
-	//	//unmap and unbind buffer
-	//	glUnmapBuffer(GL_ARRAY_BUFFER);
-	//	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//}
+		//unmap and unbind buffer
+		glUnmapBuffer(GL_ARRAY_BUFFER);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
 
 	////check it succeeded
-	//if (uiIBO2 != 0)
-	//{
-	//	//bind IBO
-	//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO2);
-	//	//allocate space for index info on the graphics card
-	//	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(char), NULL, GL_STATIC_DRAW);
-	//	//get pointer to newly allocated space on the graphics card
-	//	GLvoid* iBuffer = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
-	//	//specify the order we'd like to draw our vertices.
-	//	//In this case they are in sequential order
-	//	for (int i = 0; i < 3; i++)
-	//	{
-	//		((char*)iBuffer)[i] = i;
-	//	}
-	//	//unmap and unbind
-	//	glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
-	//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	//}
+	if (uiIBO2 != 0)
+	{
+		//bind IBO
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO2);
+		//allocate space for index info on the graphics card
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(char), NULL, GL_STATIC_DRAW);
+		//get pointer to newly allocated space on the graphics card
+		GLvoid* iBuffer = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
+		//specify the order we'd like to draw our vertices.
+		//In this case they are in sequential order
+		for (int i = 0; i < 3; i++)
+		{
+			((char*)iBuffer)[i] = i;
+		}
+		//unmap and unbind
+		glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
 
 
 	//create shader program
@@ -260,52 +260,52 @@ int main()
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
 		
-		//glBindTexture(GL_TEXTURE_2D, textureID);
-		//glBindBuffer(GL_ARRAY_BUFFER, uiVBO2);
-		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO2);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		glBindBuffer(GL_ARRAY_BUFFER, uiVBO2);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uiIBO2);
 
-		//glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex2), 0);
-		//glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex2), (void*)(sizeof(vec4)));
-		//glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex2), (void*)(sizeof(vec4)* 2));
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex2), 0);
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex2), (void*)(sizeof(vec4)));
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex2), (void*)(sizeof(vec4)* 2));
 
-		spaceShip.Draw();
+		/*spaceShip.Draw();*/
 
-		//glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, NULL);
+		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, NULL);
 
 		//Movement Shits
-		//if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
-		//	//move forward
-		//	for (int i = 0; i < 3; i++){
-		//		playerBuffer[i].positions.y += 1.0f;
-		//		if (playerBuffer[i].positions.y >= 720){
-		//			playerBuffer[i].positions.y = 0;
-		//		}
-		//	}
-		//	glBindBuffer(GL_ARRAY_BUFFER, uiVBO2);
-		//	GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-		//	//copy to card
-		//	memcpy(vBuffer, playerBuffer, sizeof(Vertex2)* 3);
-		//	//unmap and unbind
-		//	glUnmapBuffer(GL_ARRAY_BUFFER);
-		//	glBindBuffer(GL_ARRAY_BUFFER, 0);
-		//}
+		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
+			//move forward
+			for (int i = 0; i < 3; i++){
+				playerBuffer[i].positions.y += 1.0f;
+				if (playerBuffer[i].positions.y >= 720){
+					playerBuffer[i].positions.y = 0;
+				}
+			}
+			glBindBuffer(GL_ARRAY_BUFFER, uiVBO2);
+			GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+			//copy to card
+			memcpy(vBuffer, playerBuffer, sizeof(Vertex2)* 3);
+			//unmap and unbind
+			glUnmapBuffer(GL_ARRAY_BUFFER);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+		}
 
-		//if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
-		//	//move forward
-		//	for (int i = 0; i < 3; i++){
-		//		playerBuffer[i].positions.y -= 1.0f;
-		//		if (playerBuffer[i].positions.y <= 0){
-		//			playerBuffer[i].positions.y = 720;
-		//		}
-		//	}
-		//	glBindBuffer(GL_ARRAY_BUFFER, uiVBO2);
-		//	GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-		//	//copy to card
-		//	memcpy(vBuffer, playerBuffer, sizeof(Vertex2)* 3);
-		//	//unmap and unbind
-		//	glUnmapBuffer(GL_ARRAY_BUFFER);
-		//	glBindBuffer(GL_ARRAY_BUFFER, 0);
-		//}
+		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS){
+			//move forward
+			for (int i = 0; i < 3; i++){
+				playerBuffer[i].positions.y -= 1.0f;
+				if (playerBuffer[i].positions.y <= 0){
+					playerBuffer[i].positions.y = 720;
+				}
+			}
+			glBindBuffer(GL_ARRAY_BUFFER, uiVBO2);
+			GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+			//copy to card
+			memcpy(vBuffer, playerBuffer, sizeof(Vertex2)* 3);
+			//unmap and unbind
+			glUnmapBuffer(GL_ARRAY_BUFFER);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+		}
 
 
 
