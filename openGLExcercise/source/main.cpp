@@ -79,12 +79,6 @@ int main()
 	Player spaceShip;
 	//spaceShip.Initialize(vec4(1024 / 2.0, 720 / 2.0, 0, 0), vec4(1, 0, 1, 1), textureID);
 
-	//cout << spaceShip.origin.x << " " << spaceShip.origin.y << endl;
-	//cout << sizeof(vec4) << endl;
-	//cout << sizeof(vec2) << endl;
-	//cout << sizeof(Vertex) << endl;
-	//cout << sizeof(Vertex2) << endl;
-
 	Vertex2* playerBuffer = new Vertex2[3];
 	playerBuffer[0].positions = vec4(spaceShip.origin.x + spaceShip.vert1.x, spaceShip.origin.y + spaceShip.vert1.y, 0, 1.0f);
 	playerBuffer[0].colors = vec4(1.0f, 1.0f, 1.0f, 0.0f);
@@ -276,7 +270,7 @@ int main()
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS){
 			//move forward
 			for (int i = 0; i < 3; i++){
-				playerBuffer[i].positions.y += 1.0f;
+				playerBuffer[i].positions += vec4(0, 1.0f, 0 , 0);
 				if (playerBuffer[i].positions.y >= 720){
 					playerBuffer[i].positions.y = 0;
 				}
